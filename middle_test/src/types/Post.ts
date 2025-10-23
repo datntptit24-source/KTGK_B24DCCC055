@@ -7,3 +7,4 @@ export interface Post {
   category: string;
   date: string;
 }
+export{};

@@ -1,30 +1,44 @@
-import { useParams, Link, useNavigate } from "react-router-dom";
-import { samplePosts } from "../data/samplePosts";
+import React from "react";
+import { useParams, useNavigate, Link } from "react-router-dom";
+import { Post } from "../types/Post";
 
-export default function PostDetail() {
+interface Props {
+  posts: Post[];
+  onDelete: (id: number) => void;
+}
+
+const PostDetail: React.FC<Props> = ({ posts, onDelete }) => {
   const { id } = useParams();
   const navigate = useNavigate();
-  const post = samplePosts.find((p) => p.id === Number(id));
 
-  if (!post) return <p className="text-center mt-10 text-red-500">Bài viết không tồn tại!</p>;
+  const post = posts.find((p) => p.id === Number(id));
+
+  if (!post) return <h2>Không tìm thấy bài viết!</h2>;
+
+  const handleDelete = () => {
+    if (window.confirm("Bạn có chắc muốn xóa bài viết này?")) {
+      onDelete(post.id);
+      navigate("/");
+    }
+  };
 
   return (
-    <div className="max-w-4xl mx-auto mt-10 bg-white p-6 rounded-xl shadow-lg">
-      <img src={post.thumbnail} alt={post.title} className="w-full h-64 object-cover rounded-lg mb-4" />
-      <h1 className="text-3xl font-bold mb-2">{post.title}</h1>
-      <p className="text-gray-600 mb-4">Tác giả: {post.author} • {post.date}</p>
-      <p className="mb-6 whitespace-pre-wrap">{post.content}</p>
-      <div className="flex justify-between">
-        <button onClick={() => navigate(-1)} className="bg-gray-300 px-4 py-2 rounded-md">
-          Quay lại
-        </button>
-        <div className="flex gap-2">
-          <Link to={`/posts/edit/${post.id}`} className="bg-yellow-400 px-4 py-2 rounded-md">Chỉnh sửa</Link>
-          <button onClick={() => { if (window.confirm("Bạn có chắc muốn xóa?")) navigate("/"); }} className="bg-red-500 text-white px-4 py-2 rounded-md">
-            Xóa
-          </button>
-        </div>
+    <div className="container detail">
+      <img src={post.thumbnail} alt={post.title} className="detail-img" />
+      <h1>{post.title}</h1>
+      <p>
+        <b>Tác giả:</b> {post.author} | <i>{post.date}</i> |{" "}
+        <b>Thể loại:</b> {post.category}
+      </p>
+      <p className="content">{post.content}</p>
+
+      <div className="btn-group">
+        <button onClick={() => navigate(-1)}>⬅ Quay lại</button>
+        <Link to={`/posts/edit/${post.id}`} className="btn-edit">✏ Chỉnh sửa</Link>
+        <button onClick={handleDelete} className="btn-delete">🗑 Xóa bài viết</button>
       </div>
     </div>
   );
-}
+};
+
+export default PostDetail;

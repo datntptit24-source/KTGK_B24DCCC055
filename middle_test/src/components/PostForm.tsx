@@ -1,91 +1,58 @@
-import { useState } from "react";
-import { Post } from "../type/post";
+import React, { useState, useEffect } from "react";
+import { Post } from "../types/Post";
+import "./PostForm.css";
 
 interface Props {
-  onSubmit: (post: Omit<Post, "id" | "date">) => void;
   initialData?: Post;
+  onSubmit: (data: Post) => void;
 }
 
-export default function PostForm({ onSubmit, initialData }: Props) {
-  const [formData, setFormData] = useState({
-    title: initialData?.title || "",
-    author: initialData?.author || "",
-    thumbnail: initialData?.thumbnail || "",
-    content: initialData?.content || "",
-    category: initialData?.category || "Khác",
-  });
-
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
-    const { name, value } = e.target;
-    setFormData((prev) => ({ ...prev, [name]: value }));
-  };
+const PostForm: React.FC<Props> = ({ initialData, onSubmit }) => {
+  const [title, setTitle] = useState(initialData?.title || "");
+  const [author, setAuthor] = useState(initialData?.author || "");
+  const [thumbnail, setThumbnail] = useState(initialData?.thumbnail || "");
+  const [content, setContent] = useState(initialData?.content || "");
+  const [category, setCategory] = useState(initialData?.category || "Khác");
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    if (formData.title.length < 1)
-      return alert("Tiêu đề phải có ít nhất 1 ký tự");
-    if (formData.author.length < 3)
-      return alert("Tên tác giả phải có ít nhất 3 ký tự");
-    if (formData.content.length < 5)
-      return alert("Nội dung phải có ít nhất 5 ký tự");
-    onSubmit(formData);
+    if (title.length < 10 || author.length < 3 || content.length < 50) {
+      alert("Vui lòng kiểm tra lại thông tin!");
+      return;
+    }
+    const post: Post = {
+      id: initialData?.id || Date.now(),
+      title,
+      author,
+      thumbnail,
+      content,
+      category,
+      date: initialData?.date || new Date().toISOString().split("T")[0],
+    };
+    onSubmit(post);
   };
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-4 bg-white p-6 rounded-lg shadow-md">
-      <input
-        type="text"
-        name="title"
-        placeholder="Tiêu đề"
-        value={formData.title}
-        onChange={handleChange}
-        className="w-full border p-2 rounded"
-      />
-      <input
-        type="text"
-        name="author"
-        placeholder="Tác giả"
-        value={formData.author}
-        onChange={handleChange}
-        className="w-full border p-2 rounded"
-      />
-      <input
-        type="text"
-        name="thumbnail"
-        placeholder="URL ảnh thumbnail"
-        value={formData.thumbnail}
-        onChange={handleChange}
-        className="w-full border p-2 rounded"
-      />
-      <textarea
-        name="content"
-        placeholder="Nội dung bài viết..."
-        rows={10}
-        value={formData.content}
-        onChange={handleChange}
-        className="w-full border p-2 rounded"
-      />
-      <select
-        name="category"
-        value={formData.category}
-        onChange={handleChange}
-        className="w-full border p-2 rounded"
-      >
+    <form onSubmit={handleSubmit} className="form">
+      <input value={title} onChange={(e) => setTitle(e.target.value)} placeholder="Tiêu đề" />
+      <input value={author} onChange={(e) => setAuthor(e.target.value)} placeholder="Tác giả" />
+      <input value={thumbnail} onChange={(e) => setThumbnail(e.target.value)} placeholder="URL ảnh thumbnail" />
+      <select value={category} onChange={(e) => setCategory(e.target.value)}>
         <option>Công nghệ</option>
         <option>Du lịch</option>
         <option>Ẩm thực</option>
         <option>Đời sống</option>
         <option>Khác</option>
       </select>
-
-      <div className="flex justify-end gap-2">
-        <button
-          type="submit"
-          className="bg-indigo-600 text-white px-4 py-2 rounded hover:bg-indigo-700"
-        >
-          {initialData ? "Cập nhật" : "Đăng bài"}
-        </button>
-      </div>
+      <textarea
+        rows={10}
+        value={content}
+        onChange={(e) => setContent(e.target.value)}
+        placeholder="Nội dung bài viết..."
+      />
+      <button type="submit">{initialData ? "Cập nhật" : "Đăng bài"}</button>
     </form>
   );
-}
+};
+
+export default PostForm;

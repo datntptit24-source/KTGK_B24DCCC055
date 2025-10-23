@@ -1,0 +1,74 @@
+/* src/pages/PostList.css */
+
+/* Tổng thể trang */
+.post-list-container {
+  max-width: 1200px;
+  margin: 30px auto;
+  padding: 0 20px;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* Thanh trên cùng (filter + nút viết bài) */
+.post-list-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 25px;
+}
+
+.post-list-header h2 {
+  font-size: 24px;
+  font-weight: 600;
+  color: #222;
+}
+
+.post-list-header input {
+  padding: 8px 12px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  width: 240px;
+  outline: none;
+  transition: all 0.2s ease;
+}
+
+.post-list-header input:focus {
+  border-color: #007bff;
+  box-shadow: 0 0 4px rgba(0, 123, 255, 0.25);
+}
+
+.post-list-header button {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  padding: 10px 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.25s ease;
+}
+
+.post-list-header button:hover {
+  background-color: #0056b3;
+  transform: translateY(-1px);
+}
+
+/* Grid 3 cột */
+.post-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+}
+
+/* Responsive: 2 cột trên tablet, 1 cột trên mobile */
+@media (max-width: 992px) {
+  .post-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 600px) {
+  .post-grid {
+    grid-template-columns: 1fr;
+  }
+}
+/* Thông báo khi không có bài viết */

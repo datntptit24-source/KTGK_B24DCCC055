@@ -1,0 +1,85 @@
+.post-form-container {
+  max-width: 700px;
+  margin: 50px auto;
+  padding: 30px;
+  background: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+.post-form-container h2 {
+  display: flex;
+  align-items: center;
+  font-size: 1.8rem;
+  margin-bottom: 20px;
+  color: #333;
+}
+
+.post-form-container h2 svg {
+  margin-right: 10px;
+  color: #007bff;
+}
+
+.post-form-container form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.post-form-container input,
+.post-form-container select,
+.post-form-container textarea {
+  width: 100%;
+  padding: 10px 14px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  font-size: 1rem;
+  transition: border 0.3s;
+}
+
+.post-form-container input:focus,
+.post-form-container select:focus,
+.post-form-container textarea:focus {
+  outline: none;
+  border-color: #007bff;
+  box-shadow: 0 0 3px rgba(0, 123, 255, 0.4);
+}
+
+.post-form-container textarea {
+  resize: vertical;
+  min-height: 150px;
+}
+
+.post-form-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.post-form-actions button {
+  padding: 10px 18px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: all 0.3s;
+}
+
+.post-form-actions .submit-btn {
+  background-color: #007bff;
+  color: white;
+}
+
+.post-form-actions .cancel-btn {
+  background-color: #e0e0e0;
+  color: #333;
+}
+
+.post-form-actions .submit-btn:hover {
+  background-color: #0056b3;
+}
+
+.post-form-actions .cancel-btn:hover {
+  background-color: #bdbdbd;
+}

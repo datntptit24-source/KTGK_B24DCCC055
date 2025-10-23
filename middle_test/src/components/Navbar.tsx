@@ -1,23 +1,22 @@
-import { NavLink } from "react-router-dom";
+import React from "react";
+import { NavLink, useNavigate } from "react-router-dom";
+import "./Navbar.css";
 
-export default function Navbar() {
+const Navbar: React.FC = () => {
+  const navigate = useNavigate();
   return (
-    <nav className="bg-gradient-to-r from-indigo-500 to-purple-600 text-white px-8 py-4 flex justify-between items-center shadow-lg rounded-b-2xl">
-      <h1 className="text-2xl font-bold tracking-wide">📝 Blog Manager</h1>
-      <div className="flex gap-6 text-lg">
-        <NavLink
-          to="/"
-          className={({ isActive }) => (isActive ? "underline font-semibold" : "")}
-        >
+    <nav className="navbar">
+      <h2 className="logo" onClick={() => navigate("/")}>BlogManager</h2>
+      <div className="nav-links">
+        <NavLink to="/" end className={({ isActive }) => (isActive ? "active" : "")}>
           Trang chủ
         </NavLink>
-        <NavLink
-          to="/create"
-          className="bg-white text-purple-700 px-3 py-1 rounded-lg hover:bg-purple-100 transition"
-        >
+        <NavLink to="/create" className={({ isActive }) => (isActive ? "active" : "")}>
           Viết bài
         </NavLink>
       </div>
     </nav>
   );
-}
+};
+
+export default Navbar;

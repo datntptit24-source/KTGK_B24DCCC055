@@ -1,7 +1,8 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Post } from "../types/Post";
 import PostCard from "../components/PostCard";
-import { Post } from "../type/post";
+import { Link } from "react-router-dom";
+import "./PostList.css";
 
 interface Props {
   posts: Post[];
@@ -9,32 +10,32 @@ interface Props {
 }
 
 const PostList: React.FC<Props> = ({ posts, onDelete }) => {
-  const [filter, setFilter] = useState("");
+  const [search, setSearch] = useState("");
 
   const filteredPosts = posts.filter((p) =>
-    p.title.toLowerCase().includes(filter.toLowerCase())
+    p.title.toLowerCase().includes(search.toLowerCase())
   );
 
   return (
     <div className="post-list-container">
       <div className="post-list-header">
-        <h2>Tổng số bài: {filteredPosts.length}</h2>
-        <div>
+        <h2>Tổng số bài viết: {filteredPosts.length}</h2>
+        <div className="post-list-controls">
           <input
-            className="search-box"
-            placeholder="Tìm kiếm bài viết..."
-            value={filter}
-            onChange={(e) => setFilter(e.target.value)}
+            type="text"
+            placeholder="Search theo tiêu đề..."
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
           />
           <Link to="/create">
-            <button className="create-btn">+ Viết bài mới</button>
+            <button>+ Viết bài mới</button>
           </Link>
         </div>
       </div>
 
       <div className="post-grid">
-        {filteredPosts.map((p) => (
-          <PostCard key={p.id} post={p} onDelete={onDelete} />
+        {filteredPosts.map((post) => (
+          <PostCard key={post.id} post={post} onDelete={onDelete} />
         ))}
       </div>
     </div>
