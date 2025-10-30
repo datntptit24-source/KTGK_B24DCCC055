@@ -16,7 +16,7 @@ const PostForm: React.FC<Props> = ({ initialData, onSubmit }) => {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    if (title.length < 10 || author.length < 3 || content.length < 50) {
+    if (title.length < 10 || author.length < 3 || content.length < 5  ) {
       alert("Vui lòng kiểm tra lại thông tin!");
       return;
     }
